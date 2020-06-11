@@ -38,7 +38,7 @@ static void default_command_line()
     command_line.should_keep_finished = 1;
     command_line.gzip = 0;
     command_line.send_output_by_mail = 0;
-    command_line.label = 0;
+    command_line.label = getenv("USER");
     command_line.do_depend = 0;
     command_line.depend_on = -1; /* -1 means depend on previous */
     command_line.max_slots = 1;
