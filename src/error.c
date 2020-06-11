@@ -63,16 +63,17 @@ static FILE * open_error_file()
     char *path;
     int new_size;
     char *new_path;
-
+    char *user = getenv("USER");
     create_socket_path(&path);
-    new_size = strlen(path)+10;
+    new_size = strlen(path)+strlen(user)+10;
     new_path = malloc(new_size);
 
     strncpy(new_path, path, new_size);
-    strncat(new_path, ".error", (new_size - strlen(path)) - 1);
+    strcat(new_path, user);
+    strcat(new_path, ".error");
     free(path);
 
-    fd = open(new_path, O_CREAT | O_APPEND | O_WRONLY, 0600);
+    fd = open(new_path, O_CREAT | O_APPEND | O_WRONLY, 0644);
     if (fd == -1)
     {
         free(new_path);
