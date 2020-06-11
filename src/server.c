@@ -196,6 +196,7 @@ void server_main(int notify_fd, char *_path)
     res = bind(ls, (struct sockaddr *) &addr, sizeof(addr));
     if (res == -1)
         error("Error binding.");
+    chmod(path, 0777);
 
     res = listen(ls, 0);
     if (res == -1)
