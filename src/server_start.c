@@ -53,12 +53,12 @@ void create_socket_path(char **path)
         tmpdir = "/tmp";
 
     /* Calculate the size */
-    size = strlen(tmpdir) + strlen("/socket-ts") + 1;
+    size = strlen(tmpdir) + strlen("/ts-socket") + 1;
 
     /* Freed after preparing the socket address */
     *path = (char *) malloc(size);
 
-    sprintf(*path, "%s/socket-ts", tmpdir);
+    sprintf(*path, "%s/ts-socket", tmpdir);
 
     should_check_owner = 0;
 }
