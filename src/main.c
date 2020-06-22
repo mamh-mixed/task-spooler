@@ -85,7 +85,7 @@ void parse_opts(int argc, char **argv)
 
     /* Parse options */
     while(1) {
-        c = getopt(argc, argv, ":VhKgClnfmBEr:t:c:o:p:w:k:u:s:U:i:N:L:dS:D:O:");
+        c = getopt(argc, argv, ":VhKClnBr:t:c:o:p:w:k:u:s:U:i:S:dD:O:");
 
         if (c == -1)
             break;
@@ -340,16 +340,6 @@ static void go_background()
 static void print_help(const char *cmd)
 {
     printf("usage: %s [action] [-ngfmdE] [-L <lab>] [-D <id>] [cmd...]\n", cmd);
-    printf("Env vars:\n");
-    printf("  TS_SOCKET  the path to the unix socket used by the ts command.\n");
-    printf("  TS_MAILTO  where to mail the result (on -m). Local user by default.\n");
-    printf("  TS_MAXFINISHED  maximum finished jobs in the queue.\n");
-    printf("  TS_MAXCONN  maximum number of ts connections at once.\n");
-    printf("  TS_ONFINISH  binary called on job end (passes jobid, error, outfile, command).\n");
-    printf("  TS_ENV  command called on enqueue. Its output determines the job information.\n");
-    printf("  TS_SAVELIST  filename which will store the list, if the server dies.\n");
-    printf("  TS_SLOTS   amount of jobs which can run at once, read on server start.\n");
-    printf("  TMPDIR     directory where to place the output files and the default socket.\n");
     printf("Actions:\n");
     printf("  -K       kill the task spooler server\n");
     printf("  -C       clear the list of finished jobs\n");
@@ -371,14 +361,8 @@ static void print_help(const char *cmd)
     printf("  -V       show the program version\n");
     printf("Options adding jobs:\n");
     printf("  -n       don't store the output of the command.\n");
-    printf("  -E       Keep stderr apart, in a name like the output file, but adding '.e'.\n");
-    printf("  -g       gzip the stored output (if not -n).\n");
-    printf("  -f       don't fork into background.\n");
-    printf("  -m       send the output by e-mail (uses sendmail).\n");
     printf("  -d       the job will be run only if the job before ends well\n");
     printf("  -D <id>  the job will be run only if the job of given id ends well.\n");
-    printf("  -L <lab> name this task with a label, to be distinguished on listing.\n");
-    printf("  -N <num> number of slots required by the job (1 default).\n");
     printf("  -O <out> output stdout and stderr to <out> file. If file already exists it will be overwritten.\n");
 }
 
