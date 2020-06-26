@@ -35,15 +35,15 @@ char * joblist_headers()
     char * line;
 
     line = malloc(100);
-    snprintf(line, 100, "%-4s %-10s %-20s %-8s %-14s %s [run=%i/%i]\n",
+    snprintf(line, 100, "%-4s %-10s %-8s %-8s [run=%i/%i] %s &>%-20s\n",
             "ID",
             "State",
-            "Output",
             "E-Level",
-            "Times(r/u/s)",
-            "Command",
+            "Times",
             busy_slots,
-            max_slots);
+            max_slots,
+            "Command",
+            "Output");
 
     return line;
 }
@@ -113,25 +113,17 @@ static char * print_noresult(const struct Job *p)
     if (line == NULL)
         error("Malloc for %i failed.\n", maxlen);
 
-    if (p->label)
-        snprintf(line, maxlen, "%-4i %-10s %-20s %-8s %14s %s[%s]%s\n",
+    snprintf(line, maxlen, "%-4i %-10s %-8s %-8s %s [%s][%s &>%-20s]\n",
                 p->jobid,
                 jobstate,
-                output_filename,
-                "",
-                "",
-		        dependstr,
+                "?",
+                "?",
+                dependstr,
                 p->label,
-                p->command);
-    else
-        snprintf(line, maxlen, "%-4i %-10s %-20s %-8s %14s %s%s\n",
-                p->jobid,
-                jobstate,
-                output_filename,
-                "",
-                "",
-		        dependstr,
-                p->command);
+                p->command,
+                output_filename
+                );
+
 
     return line;
 }
@@ -166,30 +158,17 @@ static char * print_result(const struct Job *p)
     if (line == NULL)
         error("Malloc for %i failed.\n", maxlen);
 
-    if (p->label)
-        snprintf(line, maxlen, "%-4i %-10s %-20s %-8i %0.2f/%0.2f/%0.2f %s[%s]"
-                "%s\n",
+
+    snprintf(line, maxlen, "%-4i %-10s %-8i %-8.2f %s[%s][%s &>%-20s]\n",
                 p->jobid,
                 jobstate,
-                output_filename,
                 p->result.errorlevel,
                 p->result.real_ms,
-                p->result.user_ms,
-                p->result.system_ms,
                 dependstr,
                 p->label,
-                p->command);
-    else
-        snprintf(line, maxlen, "%-4i %-10s %-20s %-8i %0.2f/%0.2f/%0.2f %s%s\n",
-                p->jobid,
-                jobstate,
-                output_filename,
-                p->result.errorlevel,
-                p->result.real_ms,
-                p->result.user_ms,
-                p->result.system_ms,
-                dependstr,
-                p->command);
+                p->command,
+                output_filename
+                );
 
     return line;
 }
